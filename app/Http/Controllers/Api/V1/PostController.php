@@ -16,8 +16,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::latest()->get();
-        return new PostResource($posts);
+        $posts = Post::latest()->paginate();
+        return PostResource::collection($posts);
     }
 
     /**
@@ -62,6 +62,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $post->delete();
+        return response()->json($post,204);
     }
 }
